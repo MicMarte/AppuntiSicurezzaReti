@@ -57,17 +57,23 @@
 
 
 \title{Appunti - Sicurezza delle reti}
-\author{Martini Michele {\footnotesize (e tante altre bestie)}}
+\author{Martini Michele {\footnotesize et al.}}
 
 \begin{document}
 \maketitle
 
+\setcounter{tocdepth}{1}
+\tableofcontents
+
 \chapter{Sicurezza informatica}
 Cosa si intende con \emph{information security}?
 \begin{itemize}
-	\item \textbf{Computer security}: prevenzione e rilevazione di azioni non autorizzate da parte di utenti di un singolo computer.
-	\item \textbf{Network security}: politiche e sistemi adottati dall'amministratore per proteggere la rete e le risorse in essa contenute da accessi non autorizzati.
-	\item \textbf{Information security}: sicurezza in senso generico, indica la protezione di informazioni e information systems da accessi/manipolazioni non autorizzati.
+	\item \emph{Computer security}\\
+	Prevenzione e rilevazione di azioni non autorizzate da parte di utenti di un singolo computer.
+	\item \emph{Network security}\\
+	Politiche e sistemi adottati dall'amministratore per proteggere la rete e le risorse in essa contenute da accessi non autorizzati.
+	\item \emph{Information security}\\
+	Sicurezza in senso generico, indica la protezione di informazioni e information systems da accessi/manipolazioni non autorizzati.
 \end{itemize}
 
 \section{Sicurezza come policy compliance}
@@ -147,6 +153,7 @@ Le vulnerabilità possono essere dovute all'ambiente fisico (hardware accessibil
 \paragraph{Superficie di attacco}
 Parti del sistema esposte a manipolazione da parte di utenti non autorizzati. Tale superficie dev'essere minimizzata per incrementare la sicurezza del sistema. Ad esempio, in ambiente di rete è rischioso lasciare aperte porte non utilizzate dal sistema.\\
 
+\clearpage
 \noindent Fasi per l'analisi e la riduzione dei rischi:
 \begin{enumerate}
 	\item Analisi dei rischi esistenti:
@@ -235,6 +242,7 @@ Da ora in poi assumeremo sempre che l'algoritmo sia noto all'attaccante. Possiam
 	\item \emph{Chosen cyphertext}: L'attaccante può scegliere diversi testi cifrati da decifrare e vederne quindi il testo in chiaro.
 \end{itemize}
 
+\clearpage
 \subsubsection{Definizione di sicurezza}
 Vogliamo garantire una proprietà di sicurezza per il sistema. Per certificare formalmente la soddisfazione dei requisiti di tale proprietà, costruiamo una \emph{definizione di sicurezza} sfruttando il modello in figura [\ref{fig:modello-def-sicurezza}]. Il procedimento prevede le seguenti fasi:
 \begin{enumerate}
@@ -327,7 +335,7 @@ Nel 1949 Shannon introduce le substitution-permutation network:
 \end{enumerate}
 \begin{figure}[htp]
 	\centering
-	\includegraphics[width=.5\textwidth]{images/Feistel}
+	\includegraphics[width=.45\textwidth]{images/Feistel}
 	\caption{Round di cifratura di Feistel.}
 \end{figure}
 \emph{DES}: Data Encryption Standard. Variante di Feistel a 16 round, lavora con chiavi a 56 bit dividendo il testo in blocchi da 64 bit. Possibili atticchi: brute-force o attacco matematico basato su critoanalisi lineare (riduce lo spazio delle chiavi da $2^{56}$ a $2^{43}$).
@@ -338,9 +346,10 @@ Triple-DES: tre DES  con due chiavi, $K_1$ e $K_2$, posti in cascata in modo non
 	\item Encryption: primo e terzo DES cifrano usando $K_1$, mentre il secondo DES decifra con chiave $K_2$.
 	\item Decryption: primo e terzo DES decifrano usando $K_1$, mentre il secondo DES cifra con chiave $K_2$.
 \end{itemize}
-Se $K_1 = K_2$, triplo DES è compatibile con DES. Unico attacco possibile: brute-force con spazio delle chiavi $2^{112}$.\\
+Se $K_1 = K_2$, triplo DES è compatibile con DES. Unico attacco possibile: brute-force con spazio delle chiavi $2^{112}$.
 
-\noindent\emph{AES}: Advanced Encryption Standard. Evoluzione di triple-DES, in quanto troppo lento e basato su blocchi a 64 bit. AES non ha una struttura di Feistel e lavora con blocchi da 128, 192 o 256 bit.
+\paragraph{AES:} Advanced Encryption Standard.\\
+Evoluzione di triple-DES, in quanto troppo lento e basato su blocchi a 64 bit. AES non ha una struttura di Feistel e lavora con blocchi da 128, 192 o 256 bit.
 
 \paragraph{Plaintext di dimensioni maggiori ad un blocco}
 Come può essere applicato un cifrario a blocchi su un messaggio la cui lunghezza eccede le dimensioni del blocco? Esistono molte soluzioni, vediamone solo due:
@@ -434,6 +443,7 @@ Una funzione $f_k: X\rightarrow Y$ è detta \emph{one-way trapdoor} se, data l'i
 RSA è l'algoritmo crittografico a chiave pubblica più popolare e basa la sua sicurezza sulla difficoltà nel fattorizzare numeri di grandi dimensioni, le chiavi sono infatti numeri primi di oltre 100 cifre. Problema: computazionalmente pesante, per essere sicuro richiede chiavi da 1024 o 2048 bit.
 
 %TODO Aggiungere ref appendice
+\clearpage
 \paragraph{Funzionamento}
 Di seguito sono descritti i passi dell'algoritmo, per comprendere i quali è necessario conoscere alcune basi di teoria dei numeri (vedi appendice).
 \begin{itemize}
@@ -475,6 +485,7 @@ Studiamo i seguenti approcci:
 	\item Massey-Omura
 \end{itemize}
 
+\clearpage
 \paragraph{Scambio di chiavi con RSA}
 \begin{itemize}
 	\item Per cifrare $M$ con $PU=(e,\,n)$, scegliamo $k$ casualmente:
@@ -1296,6 +1307,7 @@ SSL consiste di due protocolli: uno di handshake e uno di record. Il primo utili
 	\includegraphics[width=.95\textwidth]{images/SSL}
 \end{minipage}
 
+\clearpage
 \begin{enumerate}
 	\item[Fase 1.] \emph{Hello}
 	\begin{colbox}{beige}{6cm}
@@ -1434,26 +1446,230 @@ in cui:
 dove $SKEYID_\alpha$ con $\alpha=a,e$ è una chiave derivata dalla chiave conosciuta nella prima fase, il cui pedice ne indica l'utilizzo (autenticazione o cifratura). Grazie alla PFS, anche se in futuro viene scoperta la chiave $K$ stabilita nella main mode, le chiavi di sessione derivate non sono compromesse.
 
 
+\chapter{Privacy e Anonymity}
+Definiamo \emph{anonymity} la condizione in cui la vera identità dell'utente è sconosciuta, mente \emph{privacy} identifica la possibilità, da parte dell'utente, di scegliere cosa rendere noto. Un utente è inoltre detto anonimo rispetto a un gruppo se le sue azioni non possono essere distinte dalle azioni di qualunque altro membro. Tale gruppo è detto \emph{anonymity set}. L'anonimità offerta dal gruppo aumenta al crescere di dimensione dello stesso.
+
+Assicurare l'anonimità in rete è difficile, in quanto i pacchetti identificano mittenti e destinatari, inoltre possono essere tracciati per effettuare analisi del traffico.
+
+\section{Proxy}
+Per rendere anonimo il mittente possiamo utilizzare dei server \emph{proxy}. Il mittente è visibile nei pacchetti tra l'utente ed il proxy, ma viene nascosto negli hop successivi. Nasce tuttavia un nuovo problema: il proxy conosce tutto. Due possibili soluzioni sono le proxy chains e le mix networks.
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=.7\textwidth]{images/proxy2}
+\end{figure}
+
+Una \emph{proxy chain} (o cascata di proxy) prevede il passaggio del pacchetto da diversi server proxy nel tragitto dall'utente al destinatario. Ogni proxy conosce solo l'hop precedente ed il successivo, perciò basta un solo proxy non compromesso per evitare la compromissione dell'anonymity.
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=\textwidth]{images/proxychain}
+	\caption{Esempio di proxy chain.}
+\end{figure}
+
+Le cascate di proxy permettono di rendere anonimo il mittente, tuttavia il destinatario rimane visibile ed l'analisi del traffico è ancora possibile, per risolvere tali problemi introduciamo le mix networks.
+
+\section{Mix networks}
+L'anonimità del destinatario può essere garantita mediante l'invio di pacchetti in broadcast o multicast, tuttavia è raramente possibile usare tali metodi. Per questo furono sviluppate le \emph{mix networks}, pensate come meccanismo per stabilire canali anonimi.
+
+Queste furono studiate per lavorare in un ambiente con attaccante di rete, il quale può:
+\begin{itemize}
+	\item capire origine e destinazione dei messaggi;
+	\item inserire, rimuovere o modificare messaggi;
+	\item \textbf{non} può mettere in relazione messaggi in chiaro e messaggi cifrati.
+\end{itemize}
+Un server \emph{Mix} è una variante del singolo proxy, con aggiunta di padding e cifratura.
+\begin{equation*}
+	\langle R_1, \langle R_0,M\rangle_{K_B},B\rangle_{K_1} \rightarrow \langle\langle R_0,M\rangle_{K_B},B\rangle
+\end{equation*}
+con $R_i$ sequenze casuali di bit.\\
+Un server mix esegue ulteriori operazioni per impedire l'analisi del traffico.
+\begin{enumerate}
+	\item Oggetti di misura fissa (usando split o padding).
+	\item Ordine di arrivo dei messaggi nascosto.
+	\item Blocco dei messaggi ripetuti.
+	\item Richiede un sufficente traffico di rete per funzionare.
+\end{enumerate}
+Un mix può anche ritornare una ricevuta $Y$ per i messaggi ricevuti:
+\begin{equation*}
+	Y = \langle C \langle R_1 \langle R_0, M\rangle_{K_B}, B \rangle_{K_1} \rangle_{K_1^{-1}}
+\end{equation*}
+con $C$ lunga sequenza costante di bit conosciuta, esempio: sequenza di zeri.
+Un partecipante può in seguito dimostrare l'invio di un messaggio, garantendo la non-repudiation:
+\begin{equation*}
+	X = \langle\langle R_0, M\rangle_{K_B}, B \rangle \qquad \langle Y\rangle_{K_1} = \langle C \langle R_1, X \rangle_{K_1} \rangle
+\end{equation*}
+L'utilizzo di un singolo mix ha gli stessi problemi dell'utilizzo di un proxy, perciò riduciamo il rischi di compromissione creando una mix network. Se A deve mandare un messaggio a B, sceglie il percorso di mix server da seguire e cifra il messaggio di conseguenza. I mix del percorso scelto agiranno dunque come nel caso della proxy chain.
+
+\noindent
+Fasi del funzionamento di un mix:
+\begin{enumerate}
+	\item Scarta i messaggi ripetuti.
+	\item Scarta i messaggi dummies ricevuti.
+	\item Genera dei nuovi dummies.
+	\item Invia a più destinazioni tutti i messaggi.
+\end{enumerate}
+
+Il destinatario tuttavia non conosce l'indirizzo del mittente, quindi non può rispondere. Per ovviare al problema, il mittente include nel messaggio l'indirizzo a cui rispondere. Esempio con singolo mix (chiave $K_1$):
+\begin{colbox}{beige}{8cm}
+	\begin{enumerate}
+		\item $\fromto{A}{Mix}\{ R_1, \{R_0, M\}_{K_B}, B\}_{K_{mix}}$
+		\item $\fromto{Mix}{B}\{\{R_0, M\}_{K_B}, B\}$
+		\item $\fromto{B}{Mix}\{K_1, A\}_{K_{mix}}, \{R_2, M'\}_{K_2}$
+		\item $\fromto{Mix}{A}A,\{\{R_2, M'\}_{K_2}\}_{K_1}$
+	\end{enumerate}
+\end{colbox}
+dove $M$ contiene $\{\{K_1, A\}_{K_{mix}}, K_2\}$.
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=\textwidth]{images/MixNetwork}
+	\caption{Schema generico di una mix network.}
+\end{figure}
+
+\section{Anonymous networks}
+Abbiamo introdotto il concetto di anonimato come lo stato in cui le proprie azioni sono indistinguibili da quelle di altri agenti appartenenti al medesimo anonymity set. Rendiamo più stringente questo concetto definendo la \emph{non osservabilità}: un osservatore non può affermare se una determinata attività abbia avuto luogo o meno.\\
+Possibili attacchi all'anonimato:
+\begin{itemize}
+	\item \emph{Analisi passiva} del traffico.
+	\item \emph{Analisi attiva} del traffico, con iniezione di pacchetti o firme temporali.
+	\item \emph{Compromissione dei nodi} della rete (ipotesi: solo una parte è infetta).
+\end{itemize}
+Come abbiamo visto questi problemi sono risolvibili attraverso le mix networks, le quali tuttavia sono computazionalmente onerose a causa della cifratura a chiave pubblica, perciò risultano adatte allo scambio di mail ma non per altri scopi (esempio: web browsing).
+
+Idee: randomizzare il routing e usare chiavi di sessione. Cambiare più volte il path dei messaggi rende più difficile effettuare un attacco, e usando una chiave di sessione possiamo rendere prestazionalmente accettabile l'uso di una mix network.
+
+\subsection{Onion routing}
+Per applicare le idee introdotte sopra, sfruttiamo un \emph{onion routing}, in cui il mittente decide il path e genera i layer di cifratura (a ``cipolla"), ipotizzando che alcuni nodi siano compromessi.
+Il sistema più noto basato su onion routing di seconda generazione è \textbf{Tor}, che conta centinaia di nodi sparsi nel globo e può essere usato senza privilegi di amministratore per allargarne la base d'utilizzo.
+
+L'architettura di Tor è pensata per mantenere segreti i server, per farlo vengono assegnati ad alcuni nodi i ruoli di \emph{introduction point} ed \emph{exit point}. Un utente che intende accedere ad un server della rete di Tor comunica con un intro point, scambiandosi una chiave di sessione. A questo punto contatta iterativamente un nuovo nodo, scambiandosi nuove chiavi, al fine di generare un path fino ad un exit point. Quest'ultimo nodo sarà incaricato di contattare il server per conto dell'utente e stabilire un punto di \emph{rendevouz}, al fine di non esporre il server.
 
 
 
+\chapter{Intruders}
+Un problema importante per i sistemi di rete riguarda il rischio di accessi ostili o non autorizzati, sia via rete sia localmente. Possiamo classificare gli intrusi come segue:
+\begin{itemize}
+	\item \emph{Masquerader}\\
+	Utente non autorizzato ad accedere al sistema (outsider).
+	\item \emph{Misfeasor}\\
+	Utente legittimo che accede a dati o programmi a cui non avrebbe accesso o fa un uso improprio dei suoi privilegi (insider).
+	\item \emph{Clandestine}\\
+	Utente che prende il controllo del sistema e lo usa per impedire di essere rilevato o tracciato.
+\end{itemize}
+Un intruder punta ad ottenere l'accesso al sistema e, successivamente, a scalarne i privilegi, spesso sfruttando vulnerabilità. \`E inoltre importante riuscire a coprire le tracce.
+
+Per poter ottenere i privilegi da amministratore è necessario impossessarsi della password. Indovinare la password è spesso la tecnica più efficace, ma se è troppo complicata risulta necessario catturarla mediante keylogger, trojan per ingannare l'utente o monitorando login su reti non sicure.
+
+\section{Intrusion Detection}
+Implementare un sistema privo di vulnerabilità è praticamente impossibile, perciò oltre a cercare di prevenire accessi indesiderati, dobbiamo sviluppare degli \emph{Intrusion Detection Systems} (IDS). Quest'ultimi hanno un duplice scopo: rilevare velocemente eventuali intrusioni e raccogliere informazioni per incrementare la sicurezza del sistema.
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=.8\textwidth]{images/IDSprinciples}
+\end{figure}
+
+\noindent
+Ci sono due approcci principali all'intrusion detection:
+\begin{itemize}
+	\item \emph{Statistical anomaly detection}
+	\item \emph{Rule-based detection}
+\end{itemize}
+Inoltre gli IDS sfruttano file di \emph{audit}, in cui viene scritto ogni evento avvenuto nel sistema e l'autore di tale azione. Questi record sono nativi, quindi già predisposti all'uso in ogni sistema operativo multi-utente. Possono essere usati inoltre audit detection-specific che collezionano informazioni più specifiche, aggiungendo tuttavia overhead al sistema.
 
 
+\subsection{Statistical anomaly detection}
+Questo approccio si basa sulla definizione di \emph{comportamento normale} di un utente, puntando a riconoscere comportamenti illegittimi qualora determinati eventi si verificassero in modo inusuale.
+Per fare ciò utilizza due meccanismi:
+\begin{itemize}
+	\item \emph{Threshold detection}\\
+	Definisce delle soglie riguardanti le occorrenze di vari eventi, sospettando un'intrusione se il numero di eventi accaduti risulta eccessivo; inoltre le soglie sono indipendenti dall'utente. Se usato singolarmente è un meccanismo inefficace.
+	\item \emph{Profile based}\\
+	Per ogni utente cerca di sviluppare un profilo comportamentale e rileva evidenti variazioni dal comportamento atteso.
+\end{itemize}
+
+\subsection{Rule-based detection}
+Questo secondo approccio punta a definire un \emph{comportamento legittimo}, osservando gli eventi che accadono nel sistema e applicando delle regole per capire se c'è rischio di intrusione. Le regole sono costruite in due modi:
+\begin{itemize}
+	\item \emph{Rule-based anomaly detection}\\
+	Analizza lo storico degli audit per rilevare pattern comportamentali e generare automaticamente regole ad-hoc, verificando che l'attuale comportamento sia conforme ad esse.
+	\item \emph{Rule-based penetration identification}\\
+	Le regole vengono inserite manualmente da esperti in base ad attacchi noti e vulnerabilità del sistema per rilevare attacchi specifici.
+\end{itemize}
+
+\noindent
+NB: Un buon IDS non solo deve rilevare rapidamente più intrusioni possibili, ma deve anche generare pochi falsi positivi! 
+
+\subsection{Distributed Intrusion Detection}
+Gli IDS tradizionali si concentrano su un singolo sistema, ma spesso siamo costretti a proteggere sistemi distribuiti, per esempio una rete locale. Dobbiamo perciò gestire nuove tematiche, tra cui la gestione degli audit (formato, consistenza), l'integrità e la confidenzialità dei dati, la scelta di un'architettura centralizzata o distribuita per il rilevamento di intrusioni. L'architettura più comune è così articolata:
+\begin{itemize}
+	\item \emph{Host agent}: moduli dei singoli PC che raccolgono audit.
+	\item \emph{LAN agent}: analizzano il traffico di rete.
+	\item \emph{Central manager}: analizza report o direttamente gli audit per trovare eventuali anomalie o segni di intrusione.
+\end{itemize}
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=.9\textwidth]{images/LANIDS}
+	\caption{IDS per sistemi distribuiti.}
+\end{figure}
+
+\subsection{Honeypot}
+Sistemi che fungono da esca per l'attaccante. Essi devono sembrare dei veri e propri sistemi, ben difesi e con file apparentemente importanti all'interno. Sono isolati rispetto ai dati sensibili del vero sistema e sono usati per studiare le attività di un attaccante.
 
 
+\chapter{Firewall}
+Un \emph{firewall} è un \emph{Intrusion Prevention System} (IPS) e funge da punto di controllo e monitoraggio del traffico di rete. Esso interconnette reti con differenti livelli di fiducia, impone restrizioni ai servizi di rete e permette auditing e controllo degli accessi.
+Un firewall dev'essere immune ad attacchi esterni, tuttavia non può proteggere da:
+\begin{itemize}
+	\item Attacchi che bypassano il controllo (esempio: servizi trusted).
+	\item Minacce interne.
+	\item Attacchi attraverso la rete locale.
+	\item Malware eseguiti all'interno del sistema.
+\end{itemize}
+Possiamo trovare firewall di varie tipologie in base a dove si collocano nella pila ISO/OSI.
+
+\section{Tipologie di firewall}
+\subsection{Packet Filters}
+Tipologia di firewall più semplice e veloce. Questi si basano sull'analisi dei campi dei pacchetti IP senza tener traccia del contesto, accettandoli o scartandoli in base a regole specifiche.
+Sono usualmente collocati sulle interfacce di ingresso e uscita del gateway.\\
+Prevedono politiche predefinite:
+\begin{itemize}
+	\item Ciò che non è espressamente consentito è proibito (default deny).
+	\item Ciò che non è espressamente proibito è consentito (default allow).
+\end{itemize}
+Un possibile attacco è detto \emph{IP address spoofing}, in cui l'attaccante invia pacchetti dall'esterno, impostando come IP di origine uno di quelli della rete interna al firewall. Questo attacco non funziona più in quanto i firewall distinguono interfacce interne ed esterne.
+
+\subsection{Stateful Packet Filters}
+A differenza del tipo precedente, questi firewall memorizzano un contesto per poter applicare regole più complesse al traffico di rete. Essi tengono traccia delle sessioni in corso o in fase di apertura per accettare tutti e soli i pacchetti validi.
+
+\subsection{Application Level Gateway/Proxy}
+Firewall specifici per applicazioni, eseguiti su gateway o proxy, che possono controllare se l'utente è autorizzato a fare una determinata richiesta. Ogni applicazione necessita di un proxy specifico, invece di un unico proxy per gestire più servizi, in questo modo il sistema risulta più robusto a eventuali falle e non ha un unico punto di rottura.
+
+\subsection{Circuit Level Gateway}
+Firewall a livello di trasporto che permettono di impostare dei ``circuiti sicuri", il cui traffico non viene analizzato, basandosi sulla fiducia negli utenti interni.
+
+\section{Posizionamento del firewall}
+\subsection{Bastion Host}
+Host reso particolarmente sicuro, incaricato di eseguire firewall a livello applicativo o di trasporto e di fornire accesso ai servizi esterni. Essendo esposto a possibili minacce presenta un sistema operativo più robusto, solo i servizi essenziali e richiede autorizzazioni aggiuntive.
+
+\subsection{Host-based firewall}
+Firewall sviluppati per essere eseguiti su host individuali, ad esempio su un server. Questi sono disponibili nativamente in molti sistemi operativi e permettono di configurare regole di filtraggio in base all'ambiente in cui sono collocati.
+
+\subsection{Personal firewall}
+Questa tipologia di firewall è solitamente meno complessa ed è pensare per essere eseguita sul proprio PC o sul router di casa. Il suo scopo principale è bloccare accessi remoti non autorizzati a computer o risorse della rete locale e impedire il monitoraggio di eventuali malware.
 
 
-
-
-
-
-
-
-
-%TODO Appendice teoria dei numeri
-\appendix
-\chapter{Teoria dei numeri}
-Blablabla
+\section{DMZ e VPN}
+Mostriamo attraverso le seguenti immagini come vengono usati i firewall per instaurare e rendere garantire la sicurezza di \emph{zone demilitarizzate} (DMZ) e \emph{reti virtuali private} (VPN).
+\begin{figure}
+	\centering
+	\includegraphics[width=.7\textwidth]{images/firewallSchema}
+	\caption{Disposizione dei firewall per stabilire una DMZ.}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=.9\textwidth]{images/VPN}
+	\caption{Utilizzo dei firewall in una VPN.}
+\end{figure}
 
 
 
