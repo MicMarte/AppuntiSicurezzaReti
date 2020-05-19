@@ -124,7 +124,7 @@ Dati e informazioni memorizzate in un sistema o scambiate tra due entità devono
 NB: privacy $\neq$ anonimity. \emph{Anonimity}: l'identità del principal è celata.
 
 \paragraph{Integrity}
-L'integrità garantisce che i dati non vengano alterati da principal malevoli. Essa presuppone una security polity atta ad identificare gli utenti autorizzati alla modifica dei dati (quali utenti possono manipolare quali dati).
+L'integrità garantisce che i dati non vengano alterati da principal malevoli. Essa presuppone una security policy atta ad identificare gli utenti autorizzati alla modifica dei dati (quali utenti possono manipolare quali dati).
 
 \paragraph{Disponibilità}
 Questa proprietà assicura l'accesso a dati e servizi in modo affidabile ed in tempi congrui, proteggendo le risorse da: attacchi malevoli, attacchi accidentali (utenti distratti) ed eventi ambientali (es: incendi).\\
@@ -238,8 +238,9 @@ NB: \emph{La sicurezza dipende dalla segretezza della chiave, non dell'algoritmo
 	\includegraphics[width=.8\textwidth]{images/Sicurezza_incondizionale.png}
 \end{figure}
 
-\paragraph{Unconditional security} Il sistema è sicuro anche se l'avversario disponesse di potenza computazionale illimitata. Si basa sulla \emph{teoria dell'informazione}.\\
+\paragraph{Unconditional security} Il sistema è sicuro anche se l'avversario disponesse di potenza computazionale illimitata. Si basa sulla \emph{teoria dell'informazione}. Un esempio di unconditional security è dato da \emph{one-time pad}, in cui dal testo cifrato è impossibile ricavare il testo in chiaro.
 \paragraph{Conditional security} Il sistema è teoricamente a rischio, tuttavia per romperlo l'avversario avrebbe bisogno di una potenza computazionale irrealisticamente elevata.
+
 
 \section{Crittoanalisi}
 Obiettivo del crittoanalista è ottenere il testo originale, tuttavia usualmente l'attaccante è interessato anche a recuperare la chiave. Vediamo due approcci comuni:
@@ -354,7 +355,7 @@ Nel 1949 Shannon introduce le substitution-permutation network:
 	\includegraphics[width=.45\textwidth]{images/Feistel}
 	\caption{Round di cifratura di Feistel.}
 \end{figure}
-\emph{DES}: Data Encryption Standard. Variante di Feistel a 16 round, lavora con chiavi a 56 bit dividendo il testo in blocchi da 64 bit. Possibili atticchi: brute-force o attacco matematico basato su critoanalisi lineare (riduce lo spazio delle chiavi da $2^{56}$ a $2^{43}$).
+\emph{DES}: Data Encryption Standard. Variante di Feistel a 16 round, lavora con chiavi a 56 bit dividendo il testo in blocchi da 64 bit. Possibili attacchi: brute-force o attacco matematico basato su critoanalisi lineare (riduce lo spazio delle chiavi da $2^{56}$ a $2^{43}$).
 
 Vorremmo aumentare la sicurezza di DES per evitare che venga rotto mediante brute-forcing. Se mettiamo due DES in cascata? Double-DES: Non funziona, debole all'attacco \emph{meet-in-the-middle} che riduce lo spazio delle chiavi a $2^{56}$.\\
 Triple-DES: tre DES  con due chiavi, $K_1$ e $K_2$, posti in cascata in modo non banale, ovvero:
@@ -432,8 +433,8 @@ La crittografia a chiave asimmetrica, o a chiave pubblica, viene introdotta come
 		I due utenti condividono la chiave e l'algoritmo. & L'utente che invia il messaggio conosce solo la chiave pubblica e l'algoritmo.\\
 		\multicolumn{2}{c}{\texttt{Requisiti di sicurezza}}\\
 		La chiave deve rimanere segreta. & La chiave privata deve rimanere segreta.\\
-		Dev'essere impossibile o impraticabile decifrare un messaggio senza ulteriori informazioni. & Dev'essere impossibile o impraticabile decifrare un messaggio senza ulteriori informazioni.\\
-		La conoscenza dell'algoritmo e di testi cifrati dev'essere insufficente a determinare la chiave. & La conoscenza dell'algoritmo, della chiave pubblica e di testi cifrati dev'essere insufficente a determinare la chiave privata.\\
+		Dev'essere impossibile o impraticabile decifrare un messaggio senza ulteriori informazioni. & Dev'essere impossibile o impraticabile decifrare un messaggio conoscendo solo la chiave pubblica.\\
+		La conoscenza dell'algoritmo e di testi cifrati dev'essere insufficente a determinare la chiave o il messaggio. & La conoscenza dell'algoritmo, della chiave pubblica e di testi cifrati deve essere insufficente a determinare la chiave privata o il messaggio.\\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -461,7 +462,7 @@ RSA è l'algoritmo crittografico a chiave pubblica più popolare e basa la sua s
 %TODO Aggiungere ref appendice
 \clearpage
 \paragraph{Funzionamento}
-Di seguito sono descritti i passi dell'algoritmo, per comprendere i quali è necessario conoscere alcune basi di teoria dei numeri (vedi appendice).
+Di seguito sono descritti i passi dell'algoritmo, per comprendere i quali è necessario conoscere alcune basi di teoria dei numeri.
 \begin{itemize}
 	\item Generazione delle chiavi:
 	\begin{enumerate}
@@ -518,7 +519,7 @@ Problema: se $d$ viene compromessa in futuro ed un attaccante ha registrato la c
 
 %TODO Appendice logaritmi discreti
 \paragraph{Scambio di chiavi con Diffie-Hellman}
-Per poter comprendere il protocollo DH è necessario avere un background riguardo i \emph{logaritmi discreti} (vedi appendice).\\
+Per poter comprendere il protocollo DH è necessario avere un background riguardo i \emph{logaritmi discreti}.\\
 \texttt{Funzionamento}:
 \begin{enumerate}
 	\item I principals si scambiano un numero primo $q$ e la \emph{radice primitiva} $\alpha$.
@@ -537,19 +538,19 @@ Per poter comprendere il protocollo DH è necessario avere un background riguard
 Proprietà di Diffie-Hellman:
 \begin{itemize}
 	\item[+] Nessuno dei due agenti può sabotare la chiave condivisa generata.
-	\item[+] \emph{Perfect Forward Secrecy} (PFS): la chiave di sessione non è compromessa anche se una chiave privata viene scoperta in futuro.
+	\item[+] \emph{Perfect Forward Secrecy} (PFS): le chiavi di sessione non sono compromesse anche se la chiave privata viene scoperta in futuro ed il canale su cui si scambiavano le mezze-chiavi di DH viene compromesso.
 	\item[$-$] Le chiavi non sono autenticate: possibile man-in-the-middle.
 \end{itemize}
 Man-in-the-middle attack:
 \begin{enumerate}
 	\item A trasmette $Y_A$ a B.
 	\item Z intercetta $Y_A$ e trasmette $Y_Z$ a B.\\
-	Inoltre, Z calcola $K_1 = (Y_A)^X_Z\,mod\,q$.
-	\item B riceve $Y_Z$ e calcola $K_2 = (Y_Z)^X_B\,mod\,q$.
+	Inoltre, Z calcola $K_1 = (Y_A)^{X_Z}\,mod\,q$.
+	\item B riceve $Y_Z$ e calcola $K_2 = (Y_Z)^{X_B}\,mod\,q$.
 	\item B trasmette $Y_B$ ad A.
 	\item Z intercetta $Y_B$ e trasmette $Y_Z$ ad A.\\
-	Inoltre, Z calcola $K_2 = (Y_B)^X_Z\,mod\,q$.
-	\item A riceve $Y_Z$ e calcola $K_2 = (Y_Z)^X_A\,mod\,q$.	
+	Inoltre, Z calcola $K_2 = (Y_B)^{X_Z}\,mod\,q$.
+	\item A riceve $Y_Z$ e calcola $K_1 = (Y_Z)^{X_A}\,mod\,q$.	
 \end{enumerate}
 A questo punto, A e B credono di condividere una chiave, in realtà A condivide $K_1$ con Z e B condivide $K_2$ con Z.
 
@@ -565,7 +566,7 @@ Variante di Diffie-Hellman. Partendo dal medesimo setup ($q$ numero primo e $\al
 Schema di cifratura privo di chiavi condivise, basato sul problema del logaritmo discreto. Il principio per cui funziona è il seguente:
 \begin{enumerate}
 	\item I principal si scambiano un numero primo $p$ e ognuno dei due sceglie due valori, $e$ e $d$, tali che $ed\,mod\,(p-1) = 1$.
-	\item Esiste quindi $k$ tale per cui $ed=k(p-1)+1$.
+	\item Per ogni $k$ vale quindi $ed=k(p-1)+1$.
 	\item Per il teorema di Eulero, per ogni $m\in\{1,\,\dots,\,p-1\}$ vale:
 	\begin{equation*}
 		M^{ed}\,mod\,p = M^{k(p-1)}M\,mod\,p=M\,mod\,p=M
@@ -610,7 +611,7 @@ La \emph{message authentication} (detta anche data-origin authentication) compre
 \paragraph{MAC}
 Un algoritmo per il Message Authentication Code consiste in una famiglia di funzioni hash $h_k$ parametrizzate da una chiave segreta $k$. Queste funzioni $h_k$ devono essere \emph{computation resistant}: date zero o più coppie di MAC $(x_i,\,h_k(x_i))$, dev'essere impraticabile computare una nuova coppia $(x,\,h_k(x))$ con $x\neq x_i$ senza conoscere la chiave $k$.
 
-Attravarso il MAC possiamo garantire message authentication, ma non la non-repudiation né la freshness. La prima non è verificata in quanto il destinatario B potrebbe creare il messaggio ed applicarvi il MAC fingendo sia stato A ad inviarlo. La \emph{freshness} è una proprietà che indica che il messaggio ricevuto è nuovo, ovvero non è la copia di un vecchio messaggio intercettato da un attaccante e rispedito in seguito (\emph{replay attack}). Il protocollo MAC non garantisce quest'ultima proprietà.
+Attravarso il MAC possiamo garantire message authentication, ma non la non-repudiation (nel caso di crittografia simmetrica) né la freshness. La prima non è verificata in quanto il destinatario B potrebbe creare il messaggio ed applicarvi il MAC fingendo sia stato A ad inviarlo. La \emph{freshness} è una proprietà che indica che il messaggio ricevuto è nuovo, ovvero non è la copia di un vecchio messaggio intercettato da un attaccante e rispedito in seguito (\emph{replay attack}). Il protocollo MAC non garantisce quest'ultima proprietà.
 
 \paragraph{Firma digitale}
 La firma digitale (\emph{digital signature}) è un protocollo fondamentale per garantire autenticazione e non-repudiation. Studiamone il funzionamento.
@@ -649,7 +650,7 @@ Costruiamo lo schema per la firma digitale:
 		\end{cases}
 	\end{equation*}
 \end{enumerate}
-Problema: questo schema è vulnerabile ad un \textbf{forgery attack}:
+Problema. Questo schema, nel quale Z si finge A per contattare B, è vulnerabile ad un \textbf{forgery attack}:
 \begin{enumerate}
 	\item L'attaccante Z sceglie casualmente una firma $S$ e computa $M=E_e(S)$.
 	\item Dato che $\mathcal{C} = \mathcal{M}$, B può inviare $(M,\,S)$ come messaggio firmato.
@@ -946,7 +947,7 @@ Per impedire l'attacco di cui sopra, alleghiamo crittograficamente le identità 
 	\begin{enumerate}
 		\item $\fromto{A}{S}A, B$
 		\item $\fromto{S}{A}\{K_{AB},\,B\}_{K_{AS}},\ \{K_{AB},\,A\}_{K_{BS}}$
-		\item $\fromto{A}{B}\{K_{AB}\}_{K_{BS}},\ A$
+		\item $\fromto{A}{B}\{K_{AB},\,A\}_{K_{BS}},\ A$
 	\end{enumerate}
 \end{colbox}
 A questo punto l'attaccante non può compromettere il protocollo mediante intercettazione o alterazione di messaggi, a patto che A e B siano onesti.
@@ -1131,7 +1132,7 @@ Vediamo due possibili vulnerabilità del protocollo Otway-Rees:
 	In questo modo Z può leggere e manipolare la comunicazione tra A e B, invalidando key-authentication e segretezza.
 \end{itemize}
 
-\subsection{Andrew Secure RCP protocol}
+\subsection{Andrew Secure RPC protocol}
 In questo protocollo, due principal che condividono una chiave simmetrica $K_{AB}$ intendono scambiarsi una nuova chiave condivisa $K_{AB}'$ che sia autenticata, fresh e segreta.
 \begin{colbox}{beige}{6cm}
 	\begin{enumerate}
@@ -1149,7 +1150,8 @@ Un attaccante Z può fare man-in-the-middle fingendosi B, intercettando il terzo
 Al termine dell'attacco A accetta come nuova chiave di sessione $N_A+1$, che non è autenticata. In questo caso la secrecy non è stata violata.
 
 \subsection{Key exchange with CA}
-Questo protocollo, conosciuto anche come ``Denning \& Sacco", permette a due principal in possesso di una chiave di sessione di scambiarsi il certificati di autenticazione. Aggiungiamo alcuni elementi alla notazione: $C_A$ indica il certificato di A, $T_A$ indica un timestamp generato da A. In questo caso inoltre S rappresenta il server di una CA.
+Questo protocollo, conosciuto anche come ``Denning \& Sacco", permette a due principal di scambiarsi i certificati di autenticazione.\\
+Aggiungiamo alcuni elementi alla notazione: $C_A$ indica il certificato di A, $T_A$ indica un timestamp generato da A. In questo caso inoltre S rappresenta il server di una CA.
 \begin{colbox}{beige}{7.5cm}
 	\begin{enumerate}
 		\item $\fromto{A}{S}A,B$
@@ -1159,8 +1161,8 @@ Questo protocollo, conosciuto anche come ``Denning \& Sacco", permette a due pri
 \end{colbox}
 Un attacco a questo protocollo si presenta quando A vuole comunicare con Z, ma Z usa il messaggio ricevuto per contattare B fingendosi A:
 \begin{gather*}
-	\fromto{A}{Z}C_A,C_Z,\{\{T_A,K_{AZ}\}_{K_A^{-1}}\}_{K_Z}\\
-	\fromto{Z}{B}C_A,C_B,\{\{T_A,K_{AZ}\}_{K_A^{-1}}\}_{K_B}
+	\fromto{A}{Z}C_A,C_Z,\{[T_A,K_{AZ}]_{K_A^{-1}}\}_{K_Z}\\
+	\fromto{Z}{B}C_A,C_B,\{[T_A,K_{AZ}]_{K_A^{-1}}\}_{K_B}
 \end{gather*}
 Giunti a questo punto, B crede di comunicare con A, invece parla con Z: sono state invalidate sia l'autenticazione che la segretezza. Come difendersi?\\
 Nell'ultimo messaggio vanno specificati anche i principal interessati:
@@ -1206,7 +1208,7 @@ ammette un \emph{parallel-session attack} con ``oracle":
 \begin{colbox}{beige}{5cm}
 	\begin{enumerate}
 		\item[1.1.] $\fromto{A}{Z}\{N_A\}_{K_{AB}}$
-		\item[2.1.] $\fromto{Z}{B}\{N_A\}_{K_{AB}}$
+		\item[2.1.] $\fromto{Z}{A}\{N_A\}_{K_{AB}}$
 		\item[2.2.] $\fromto{A}{Z}\{N_A+1\}_{K_{AB}}$
 		\item[1.2.] $\fromto{Z}{A}\{N_A+1\}_{K_{AB}}$
 	\end{enumerate}
@@ -1278,7 +1280,7 @@ Per accedere ad un servizio B, A deve presentare l'auth ticket ricevuto al login
 		\item[4.] $\fromto{TGS}{A}\{K_{A,B},B,T_3,\underbrace{\{A,B,K_{A,B},T_3\}_{K_{B,T\!G\!S}}}_{\mbox{Service Ticket}}\}_{K_{A,T\!G\!S}}$
 	\end{enumerate}
 \end{colbox}
-Questa fase dev'essere svolta ogni volta che A vuole accedere ad un servizio B. Inoltre il timestamp $T_2$ ha un lifetime di pochi secondi per prevenire replay attacks; il server tiene traccia dei recenti authenticators per prevenire replay immediati. Nel quarto messaggio, il TGS invia ad A una nuova chiave di sessione $K_{A,B}$ con validità di pochi minuti ed un \emph{Service Ticket}.
+Questa fase dev'essere svolta ogni volta che A vuole accedere ad un servizio B. Inoltre il timestamp $T_2$ ha un lifetime di pochi secondi per prevenire replay attacks; il server tiene traccia dei recenti authenticators per prevenire replay immediati. Nel quarto messaggio, il TGS invia ad A una nuova chiave di sessione $K_{A,B}$ ed un \emph{Service Ticket} con validità di pochi minuti.
 
 Nella terza ed ultima fase, A contatta il servizio B fornendo il service ticket ed un nuovo authenticator cifrato con la chiave di sessione:
 \begin{colbox}{beige}{10cm}
@@ -1348,7 +1350,7 @@ SSL consiste di due protocolli: uno di handshake e uno di record. Il primo utili
 		\begin{enumerate}
 			\item[4.] $\fromto{A}{B}\mbox{\emph{certificate}}(A,K_A)$
 			\item[5.] $\fromto{A}{B}\{PMS\}_{K_B}$
-			\item[6.] $\fromto{A}{B}\{\mbox{\emph{hash}}(\dots)\}_{K_A^{-1}}$
+			\item[6.] $\fromto{A}{B}[\mbox{\emph{hash}}(\dots)]_{K_A^{-1}}$
 		\end{enumerate}
 	\end{colbox}
 	PMS è il \emph{pre-master secret}, usato in seguito per generare un \emph{master secret} $M$:
@@ -1356,7 +1358,7 @@ SSL consiste di due protocolli: uno di handshake e uno di record. Il primo utili
 		M = PRF(PMS, N_A, N_B)
 	\end{equation*}
 	dove PRF è una Pseudo-Random Function (hash).\\
-	Il quarto ed il sesto messaggio sono opzionali e raramente richiesti, servono per autenticare il client. Nel senso A invia l'hash computato usando tutti i messaggi precedenti.
+	Il quarto ed il sesto messaggio sono opzionali e raramente richiesti, servono per autenticare il client. Nel sesto A invia l'hash computato usando tutti i messaggi precedenti.
 	\item[Fase 4.] \emph{Finish}
 	\begin{colbox}{beige}{6cm}
 		\begin{enumerate}
@@ -1392,7 +1394,7 @@ IPsec si compone di tre diversi protocolli:
 \begin{itemize}
 	\item \emph{Authentication Header} (AH)\\
 	Garantisce l'autenticazione (in seguito inglobato da ESP).
-	\item \emph{Encapsulatin Secuity Payload} (ESP)\\
+	\item \emph{Encapsulatin Security Payload} (ESP)\\
 	Garantisce confidenzialità e integrità.
 	\item \emph{Key Management} (IKE)\\
 	Gestisce lo scambio di chiavi.
@@ -1410,12 +1412,12 @@ IPsec prevede due modalità di utilizzo: \emph{Tunnel mode} e \emph{Transport mo
 	\includegraphics[width=.8\textwidth]{images/AH}
 	\caption{Authentication Header (AH).}
 \end{figure}
-L'header di IPsec si colloca tra l'header IP ed il layer di trasporto, contiene un \emph{sequence number} per evitare replay attack e un campo relativo all'\emph{authentication data} che identifica la comunicazione. Per poter funzionare inoltre, IPsec genera mediante IKE delle \emph{Security Associations} (SA), le quali sono relazioni one-way tra mittente e destinatario. Una SA permette di specificare algoritmi per autenticazione e cifratura, chiavi, lifetime delle chiavi, protocol-mode (tunnel/transport). L'identificativo della SA è contenuto nel campo \emph{Security Parameters Index} (SPI) dell'AH.
+L'header di IPsec si colloca tra l'header IP ed il layer di trasporto, contiene un \emph{sequence number} per evitare replay attack e un campo relativo all'\emph{authentication data} che identifica la comunicazione, contenente l'hash delle parti immutabili del pacchetto e garantendo integrità ed autenticità. Per poter funzionare inoltre, IPsec genera mediante IKE delle \emph{Security Associations} (SA), le quali sono relazioni one-way tra mittente e destinatario. Una SA permette di specificare algoritmi per autenticazione e cifratura, chiavi, lifetime delle chiavi, protocol-mode (tunnel/transport). L'identificativo della SA è contenuto nel campo \emph{Security Parameters Index} (SPI) dell'AH.
 
 \subsection{Encapsulating Security Payload}
 Il protocollo ESP si occupa di cifrare e, opzionalmente, autenticare il messaggio. Per garantire confidenzialità, cifra il payload e aggiunge in testa un header contenente le informazioni per la corretta decifratura. L'autenticazione è ottenuta invece aggiungendo in coda al pacchetto un MAC ottenuto dall'hash dei precedenti campi.
 
-Usando sia AH che ESP enll'header IPsec possiamo garantire confidenzialità, integrità, autenticazione e difesa da replay attack.
+Usando sia AH che ESP nell'header IPsec possiamo garantire confidenzialità, integrità, autenticazione e difesa da replay attack.
 \begin{figure}[htp]
 	\centering
 	\includegraphics[width=.95\textwidth]{images/IPsecHeader}
@@ -1434,7 +1436,7 @@ Main mode:
 		\item $\fromto{A}{B}C_A,C_B,\ X,g,p,N_A$
 		\item $\fromto{B}{A}C_A,C_B,Y,N_B$
 		\item $\fromto{A}{B}C_A,C_B,\{ID_A,AUTH_A\}_K$
-		\item $\fromto{A}{B}C_A,C_B,\{ID_B,AUTH_B\}_K$
+		\item $\fromto{B}{A}C_A,C_B,\{ID_B,AUTH_B\}_K$
 	\end{enumerate}
 \end{colbox}
 in cui:
@@ -1443,13 +1445,13 @@ in cui:
 	\item $X$ e $Y$ sono le mezze chiavi: $X = g^xmod(p)$, $Y = g^ymod(p)$
 	\item $K = Y^xmod(p) = X^ymod(p)$
 	\item $ID$: identifica l'utente (IP, nome del dominio, certificato o email)
-	\item $AUTH$: MAC o firma basato che autentica i messaggi precedenti.
+	\item $AUTH$: MAC o firma che autentica i messaggi precedenti.
 \end{itemize}
 Quick mode:
 \begin{colbox}{beige}{11.5cm}
 	\begin{enumerate}
 		\item $\fromto{A}{B}C_A,C_B,HASH(1),\ SA_A,N_A,\ X,g,p,\ ID_A,ID_B$
-		\item $\fromto{B}{A}C_A,C_B,HASH(2),\ SA_B,N_B,\ Y,g,p,\ ID_A,ID_B$
+		\item $\fromto{B}{A}C_A,C_B,HASH(2),\ SA_B,N_B,\ Y,\ ID_A,ID_B$
 		\item $\fromto{A}{B}C_A,C_B,HASH(3)$
 	\end{enumerate}
 \end{colbox}
