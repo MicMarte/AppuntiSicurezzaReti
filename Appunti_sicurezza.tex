@@ -829,9 +829,9 @@ Esempi:
 \begin{itemize}
 	\item \texttt{RSA/Diffie-Hellman}\\
 	Cifratura e distribuzione di chiavi su canali insicuri,
-	\textbf{ma} richiedono autorizzazione.
+	\textbf{ma} richiedono autenticazione.
 	\item \texttt{Firme digitali}\\
-	Garantiscono l'autorizzazione,
+	Garantiscono l'autenticazione,
 	\textbf{ma} non la timeliness del messaggio (possibili \emph{replay-attack}).
 \end{itemize}
 Come possiamo creare una comunicazione sicura?
@@ -947,7 +947,7 @@ Per impedire l'attacco di cui sopra, alleghiamo crittograficamente le identità 
 	\begin{enumerate}
 		\item $\fromto{A}{S}A, B$
 		\item $\fromto{S}{A}\{K_{AB},\,B\}_{K_{AS}},\ \{K_{AB},\,A\}_{K_{BS}}$
-		\item $\fromto{A}{B}\{K_{AB},\,A\}_{K_{BS}},\ A$
+		\item $\fromto{A}{B}\{K_{AB},\,A\}_{K_{BS}}$
 	\end{enumerate}
 \end{colbox}
 A questo punto l'attaccante non può compromettere il protocollo mediante intercettazione o alterazione di messaggi, a patto che A e B siano onesti.
@@ -963,7 +963,7 @@ Il protocollo non può ancora dirsi sicuro, infatti c'è una vulnerabilità che 
 	\begin{enumerate}
 		\item $\fromto{A}{C}A, B$
 		\item $\fromto{C}{A}\{K_{AB}'\}_{K_{AS}},\ \{K_{AB}'\}_{K_{BS}}$
-		\item $\fromto{A}{B}\{K_{AB}'\}_{K_{BS}},\ A$
+		\item $\fromto{A}{B}\{K_{AB}',\,A\}_{K_{BS}}$
 	\end{enumerate}
 \end{colbox}
 L'attaccante intercetta il messaggio di A rivolto al server S, il quale non ha alcun ruolo in questo attacco. Nelle veci del server, C invia ad A una chiave di sessione $K_{AB}'$ già usata in passato, perciò già ricavata da C.
