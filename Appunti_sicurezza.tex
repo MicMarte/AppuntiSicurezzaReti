@@ -1150,13 +1150,13 @@ Un attaccante Z può fare man-in-the-middle fingendosi B, intercettando il terzo
 Al termine dell'attacco A accetta come nuova chiave di sessione $N_A+1$, che non è autenticata. In questo caso la secrecy non è stata violata.
 
 \subsection{Key exchange with CA}
-Questo protocollo, conosciuto anche come ``Denning \& Sacco", permette a due principal di scambiarsi i certificati di autenticazione.\\
+Questo protocollo, conosciuto anche come ``Denning \& Sacco", permette a due principal di scambiarsi una chiave di sessione garantendo mutua autenticazione.\\
 Aggiungiamo alcuni elementi alla notazione: $C_A$ indica il certificato di A, $T_A$ indica un timestamp generato da A. In questo caso inoltre S rappresenta il server di una CA.
 \begin{colbox}{beige}{7.5cm}
 	\begin{enumerate}
 		\item $\fromto{A}{S}A,B$
 		\item $\fromto{S}{A}C_A,C_B$
-		\item $\fromto{A}{B}C_A,C_B,\{\{T_A,K_{AB}\}_{K_A^{-1}}\}_{K_B}$
+		\item $\fromto{A}{B}C_A,C_B,\{[T_A,K_{AB}]_{K_A^{-1}}\}_{K_B}$
 	\end{enumerate}
 \end{colbox}
 Un attacco a questo protocollo si presenta quando A vuole comunicare con Z, ma Z usa il messaggio ricevuto per contattare B fingendosi A:
