@@ -959,10 +959,10 @@ Il protocollo non può ancora dirsi sicuro, infatti c'è una vulnerabilità che 
 \end{quote}
 
 \subsubsection{Replay attack}
-\begin{colbox}{beige}{7cm}
+\begin{colbox}{beige}{8cm}
 	\begin{enumerate}
 		\item $\fromto{A}{C}A, B$
-		\item $\fromto{C}{A}\{K_{AB}'\}_{K_{AS}},\ \{K_{AB}'\}_{K_{BS}}$
+		\item $\fromto{C}{A}\{K_{AB}',\,B\}_{K_{AS}},\ \{K_{AB}',\,A\}_{K_{BS}}$
 		\item $\fromto{A}{B}\{K_{AB}',\,A\}_{K_{BS}}$
 	\end{enumerate}
 \end{colbox}
@@ -1605,7 +1605,7 @@ Per fare ciò utilizza due meccanismi:
 \end{itemize}
 
 \subsection{Rule-based detection}
-Questo secondo approccio punta a definire un \emph{comportamento legittimo}, osservando gli eventi che accadono nel sistema e applicando delle regole per capire se c'è rischio di intrusione. Le regole sono costruite in due modi:
+Questo secondo approccio punta a definire un \emph{comportamento illegittimo}, osservando gli eventi che accadono nel sistema e applicando delle regole per capire se c'è rischio di intrusione. Se il comportamento dell'utente combacia con quello descritto dalle regole, probabilmente è avvenuta un'intrusione. Le regole sono costruite in due modi:
 \begin{itemize}
 	\item \emph{Rule-based anomaly detection}\\
 	Analizza lo storico degli audit per rilevare pattern comportamentali e generare automaticamente regole ad-hoc, verificando che l'attuale comportamento sia conforme ad esse.
